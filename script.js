@@ -1,3 +1,8 @@
+document.getElementById('result').innerHTML = 1;
+// document.getElementById('demo').innerHTML = 2;
+
+const buttons = document.querySelectorAll('input');
+
 function getRandomInt(max) {
 	return Math.floor(Math.random() * max);
 }
@@ -13,68 +18,77 @@ function computerPlay() {
 	}
 }
 
-function playerChoice(string) {
-	if (string.toLowerCase() == 'rock') {
-		return 'rock';
-	} else if (string.toLowerCase() == 'paper') {
-		return 'paper';
-	} else {
-		return 'scissors';
-	}
-}
+let countWin = 0;
+let countLose = 0;
 
-//asdasdsad
-function game() {
-	let countWin = 0;
-	let countLose = 0;
+function game(playerChoice) {
+	let playerSelection = playerChoice;
+	let computerSelection = computerPlay();
+	// let input = window.prompt('enter your choice :');
+	let result = '';
 
-	for (count = 0; count < 49; count++) {
-		if (countWin == 5 || countLose == 5) {
-			break;
-		}
-		let computerSelection = computerPlay();
-		let input = window.prompt('enter your choice :');
-		let playerSelection = playerChoice(input);
-		console.log(playRound(playerSelection, computerSelection));
-		function playRound(string, func) {
-			if (string == 'rock') {
-				if (func == 'rock') {
-					return 'rock and rock, tie';
-				} else if (func == 'paper') {
-					countLose++;
-					return 'rock and paper, computer win!';
-				} else {
-					countWin++;
-					return 'rock and scissors, player win!';
-				}
-			} else if (string == 'paper') {
-				if (func == 'rock') {
-					countWin++;
-					return 'paper and rock, player wins!';
-				} else if (func == 'paper') {
-					return 'paper and paper, tie!';
-				} else {
-					countLose++;
-					return 'paper and scissors, computer wins!';
-				}
-			} else if (string == 'scissors') {
-				if (func == 'rock') {
-					countLose++;
-					return 'scissors and rock, computer wins!';
-				} else if (func == 'paper') {
-					countWin++;
-					return 'scissors and paper, player wins!';
-				} else {
-					return 'scissors and scissors, tie!';
-				}
+	playRound(playerSelection, computerSelection);
+	function playRound(playerSelection, computerSelection) {
+		if (playerSelection == 'rock') {
+			if (computerSelection == 'rock') {
+				result = 'rock and rock, tie';
+			} else if (computerSelection == 'paper') {
+				countLose++;
+				result = 'rock and paper, computer win!';
 			} else {
-				return 'enter valid statement';
+				countWin++;
+				result = 'rock and scissors, player win!';
 			}
+		} else if (playerSelection == 'paper') {
+			if (computerSelection == 'rock') {
+				countWin++;
+				result = 'paper and rock, player wins!';
+			} else if (computerSelection == 'paper') {
+				result = 'paper and paper, tie!';
+			} else {
+				countLose++;
+				result = 'paper and scissors, computer wins!';
+			}
+		} else if (playerSelection == 'scissors') {
+			if (computerSelection == 'rock') {
+				countLose++;
+				result = 'scissors and rock, computer wins!';
+			} else if (computerSelection == 'paper') {
+				countWin++;
+				result = 'scissors and paper, player wins!';
+			} else {
+				result = 'scissors and scissors, tie!';
+			}
+		} else {
+			result = 'enter valid statement';
 		}
+
+		document.getElementById('result').innerHTML = result;
+		document.getElementById('win').innerHTML = countWin;
+		document.getElementById('lose').innerHTML = countLose;
 	}
 
-	console.log(countWin);
-	console.log(countLose);
+	if (countWin == 5) {
+		result = 'Human win';
+		document.getElementById('result').innerHTML = result;
+
+		disableButtons();
+	} else if (countLose == 5) {
+		result = 'Computer win';
+		document.getElementById('result').innerHTML = result;
+
+		disableButtons();
+	}
 }
 
-game();
+buttons.forEach((button) => {
+	button.addEventListener('click', function () {
+		game(button.value);
+	});
+});
+
+function disableButtons() {
+	buttons.forEach((element) => {
+		element.disabled = true;
+	});
+}

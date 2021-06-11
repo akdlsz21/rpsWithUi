@@ -1,0 +1,29 @@
+html,
+body {
+	font-size: 20px;
+	font-family: Arial, Helvetica, sans-serif;
+	background-color: rgb(247, 234, 211);
+	max-width: 800px;
+}
+.box1 {
+	padding: 30px 100px;
+	margin: 50px;
+	background-color: #bada55;
+	border-radius: 20%;
+}
+
+.score {
+	background-color: yellow;
+	padding: 30px 100px;
+	margin: 50px;
+	border: 3px solid green;
+	border-radius: 3%;
+}
+
+.result {
+	background-color: aqua;
+	padding: 30px 100px;
+	margin: 50px;
+	border: 3px solid green;
+	border-radius: 3%;
+}
